@@ -25,7 +25,6 @@ class GameScreen : AppCompatActivity() {
     private lateinit var bottomStart: ImageView
     private lateinit var bottomEnd: ImageView
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_screen)
@@ -86,6 +85,8 @@ class GameScreen : AppCompatActivity() {
     }
 
     private fun configureBox(box: ImageView) {
+        val p1Name = intent.getStringExtra("player1")
+        val p2Name = intent.getStringExtra("player2")
         box.setOnClickListener {
             if (box.tag == null && !gameEnd) {
                 if (isPlayer1) {
@@ -98,10 +99,10 @@ class GameScreen : AppCompatActivity() {
                     box.tag = 2
                 }
                 if (playerWin(1)) {
-                    Toast.makeText(this, "Player1 venceu!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "$p1Name venceu!", Toast.LENGTH_SHORT).show()
                     gameEnd = true
                 } else if (playerWin(2)) {
-                    Toast.makeText(this, "Player2 venceu!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "$p2Name venceu!", Toast.LENGTH_SHORT).show()
                     gameEnd = true
                 }
             }
@@ -120,7 +121,10 @@ class GameScreen : AppCompatActivity() {
 
             (topStart.tag == value && centerStart.tag == value && bottomStart.tag == value) ||
             (top.tag == value && center.tag == value && bottom.tag == value) ||
-            (topEnd.tag == value && centerEnd.tag == value && bottomEnd.tag == value)
+            (topEnd.tag == value && centerEnd.tag == value && bottomEnd.tag == value) ||
+
+            (topStart.tag == value && center.tag == value && bottomEnd.tag == value) ||
+            (topEnd.tag == value && center.tag == value && bottomStart.tag == value)
         ) {
             return true
         }
